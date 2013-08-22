@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 struct Token {
 	char *word;
 	char qtd[50];
@@ -17,38 +16,38 @@ static int compare(const void * a, const void * b);
 static int compareToken(const void * a, const void * b);
 int sortChar(int size, char * arrays[]);
 int digit_to_int(char d);
-void printVetor(struct Token tokens[]);
+void printVetor(struct Token tokens[], int indexMax);
 #define BUZZ_SIZE 1024
-#define TAMANH_ARQUIVO 4024
-const int maxWords = 101;
-const int maxPrint = 55;
+const int maxWords = 47;
+const int maxPrint = 47;
 int qtyWord = 0;
 int main() {
-	int maxSize = TAMANH_ARQUIVO /sizeof(char*);
-	char *text = malloc(maxSize); ;
+	int sizeLine = 94;
+	char *text = malloc(sizeLine);
+	;
 	FILE *f = fopen("entrada.txt", "r");
-	fgets(text,maxSize, f);
+	while (fgets(text, sizeLine, f) != NULL ) {
 
-	printf("String read: %s\n", text);
-	fclose(f);
-	printf("Inicio \n");
-	char *name = "frutas";
-	//char text[] = "P M B U M L P Z U Y M K Q L K A M N X O P Z K Q W E F G V C X Z C O K J H T R E W Q A S F B N M K L P O I U Y T R E W Q A S D F G H J K L M N B V C X Z N J F U M L A C U P M B U M L P U M L P M B U M L P U M L A C U A C U ";
+		printf("Linha: %s\n", text);
+		fclose(f);
+		printf("Inicio \n");
+		char *name = "frutas";
 
-	struct Token tokensFound[maxWords];
-	//struct Token tokens2[maxWords];
+		struct Token tokensFound[maxWords];
+		//struct Token tokens2[maxWords];
 
-	map(name, text, tokensFound);
-	//map(name, text2, tokens2);
-
-	sortToken(maxWords, tokensFound);
-	//sortToken(maxWords, tokens2);
-	printVetor(tokensFound);
-	struct Token tokensUnited[maxWords];
-	shuffleSort(tokensFound, tokensUnited);
-	printVetor(tokensUnited);
-	reduce(tokensUnited);
-	printVetor(tokensUnited);
+		map(name, text, tokensFound);
+		//map(name, text2, tokens2);
+		printVetor(tokensFound, maxWords);
+		sortToken(maxWords, tokensFound);
+		//sortToken(maxWords, tokens2);
+		printVetor(tokensFound, maxWords);
+		struct Token tokensUnited[maxWords];
+		shuffleSort(tokensFound, tokensUnited);
+		printVetor(tokensUnited, 25);
+		reduce(tokensUnited);
+		printVetor(tokensUnited, 25);
+	}
 	return 0;
 }
 void shuffleSort(struct Token tokensFound[], struct Token tokensUnited[]) {
@@ -122,6 +121,7 @@ int sortToken(int size, struct Token *tokens) {
 	printf("Iniciando Ordenacao\n");
 	int i = 0;
 	qsort(tokens, size, sizeof(tokens[0]), compareToken);
+	printf("Fim da Ordenacao");
 	return 0;
 }
 int sortChar(int sizes, char * array[]) {
@@ -130,7 +130,7 @@ int sortChar(int sizes, char * array[]) {
 	return 0;
 }
 void emit(char *word, char *qtd, struct Token *tokens) {
-	if (qtyWord <= maxWords) {
+	if (qtyWord < maxWords) {
 		tokens[qtyWord].word = word;
 		strcpy(tokens[qtyWord].qtd, "1");
 		qtyWord++;
@@ -143,7 +143,6 @@ int digit_to_int(char d) {
 	str[1] = '\0';
 	return (int) strtol(str, NULL, 10);
 }
-
 
 void reduce(struct Token *tokens) {
 	printf("Iniciando Reduce\n");
@@ -162,9 +161,9 @@ void reduce(struct Token *tokens) {
 		}
 		//char qtd[acumulator];
 		//itoa(acumulator,qtd);
-		snprintf(tokens[i].qtd, 200, "%d",acumulator);
+		snprintf(tokens[i].qtd, 200, "%d", acumulator);
 		//strcpy(tokens[i].qtd, qtd);
-		printf("tokens[%d].qtd %s\n",i,tokens[i].qtd);
+		printf("tokens[%d].qtd %s\n", i, tokens[i].qtd);
 
 		acumulator = 0;
 	}
@@ -182,10 +181,10 @@ static int compareToken(const void * a, const void * b) {
 	return strcmp(elem1->word, elem2->word);
 
 }
-void printVetor(struct Token *tokens) {
+void printVetor(struct Token *tokens, int indexMax) {
 	int i;
 	printf("Print Vetor\n");
-	for (i = 0; i < maxPrint; i++) {
+	for (i = 0; i < indexMax; i++) {
 		printf("%d: (%s|%s) \n ", i, tokens[i].word, tokens[i].qtd);
 
 	}
