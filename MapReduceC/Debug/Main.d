@@ -32,4 +32,6 @@
     /usr/include/i386/types.h \
     /usr/include/string.h \
     /usr/include/strings.h \
-    /usr/include/secure/_string.h
+    /usr/include/secure/_string.h \
+    /usr/include/time.h \
+    /usr/include/_structs.h
